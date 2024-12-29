@@ -26,7 +26,6 @@ func New{{.QueryName | title }}DataSource() datasource.DataSource {
 	return &{{.QueryName}}DataSource{}
 }
 
-
 type {{.StructName}} struct {
 	client     *graphql.Client
 	{{- if .Required }}
@@ -135,7 +134,6 @@ func (d *{{.QueryName }}DataSource) Read(ctx context.Context, req datasource.Rea
 		state.{{.QueryName | title }} = append(state.{{.QueryName| title }}, current)
 	}
 	{{- end}}
-
 
 	// Set state
 	diags = resp.State.Set(ctx, &state)
