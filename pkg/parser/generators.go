@@ -172,3 +172,30 @@ func generateTerraformResource(parsedQuery *InputGraphQLQuery) (string, error) {
 
 	return buf.String(), nil
 }
+
+func GenerateArtifactDatasource(providerDirectory string) error {
+	artifactTemplate, err := template.New("artifact").Parse(string(templates.ArtifactTemplateContent))
+	if err != nil {
+		return err
+	}
+
+	var buf bytes.Buffer
+	err = artifactTemplate.Execute(&buf, "")
+	if err != nil {
+		return err
+	}
+
+	file, err := os.Create(fmt.Sprintf("%s/artifact_data_source.go", providerDirectory))
+	if err != nil {
+		return fmt.Errorf("Error creating the file: %s", err)
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(buf.String())
+	if err != nil {
+		return fmt.Errorf("Error writing to the file: %s", err)
+	}
+
+	fmt.Printf("Content written to provider.go file successfully!\n")
+	return nil
+}

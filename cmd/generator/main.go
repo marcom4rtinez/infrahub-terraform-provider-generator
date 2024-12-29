@@ -12,6 +12,7 @@ import (
 func main() {
 	graphqlDirectory := flag.String("gql-dir", "gql", "Directory with GraphQL queries")
 	providerDirectory := flag.String("provider-dir", "internal/provider", "Directory to write the generated Terraform Provider")
+	artifactDataSource := flag.Bool("artifacts", false, "Set flag to be able to query artifacts")
 
 	flag.Parse()
 
@@ -46,6 +47,14 @@ func main() {
 
 	if err != nil {
 		fmt.Println(err)
+	}
+
+	if *artifactDataSource {
+		err := parser.GenerateArtifactDatasource(*providerDirectory)
+		if err != nil {
+			fmt.Println(err)
+		}
+		dataSources = append(dataSources, "NewArtifactDataSource")
 	}
 
 	parser.ReadAndGenerateProvider(
