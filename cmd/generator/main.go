@@ -54,7 +54,7 @@ func main() {
 		if err != nil {
 			fmt.Println(err)
 		}
-		dataSources = append(dataSources, "NewArtifactDataSource")
+		dataSources = append(dataSources, "Artifact")
 	}
 
 	parser.ReadAndGenerateProvider(
