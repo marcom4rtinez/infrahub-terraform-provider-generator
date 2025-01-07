@@ -65,7 +65,7 @@ func (d *artifactDataSource) Read(ctx context.Context, req datasource.ReadReques
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	url := fmt.Sprintf("%s/api/storage/object/%s", config.InfrahubServer, config.ArtifactId.ValueString())
+	url := fmt.Sprintf("%s/api/storage/object/%s", config.InfrahubServer.ValueString(), config.ArtifactId.ValueString())
 	artifactRequest, err := http.NewRequest("GET", url, nil)
 	httpClient := &http.Client{}
 	if err != nil {
